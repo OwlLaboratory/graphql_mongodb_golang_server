@@ -6,6 +6,7 @@ import (
 	"github.com/neelance/graphql-go"
 	"github.com/OwlLaboratory/go_api/models"
 	"github.com/neelance/graphql-go/relay"
+	"github.com/OwlLaboratory/go_api/DB"
 )
 
 var schema *graphql.Schema
@@ -15,6 +16,8 @@ func init() {
 }
 
 func main() {
+	defer DB.Session.CloseSession()
+
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Write(page)
 	}))
