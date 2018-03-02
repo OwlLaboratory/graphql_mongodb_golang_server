@@ -56,3 +56,19 @@ func ChannelResolve(args struct{ ID string }) (*ChannelResolver, error) {
 
 	return &ChannelResolver{c: channel}, nil
 }
+
+func ChannelListResolve() (*[]*ChannelResolver, error) {
+	c, _ := DB.Session.GetSession()
+	collection := c.Model("Channel")
+
+	channels := []*Channel{}
+	collection.Find().Exec(&channels)
+
+	var ret []*ChannelResolver
+
+	for _, channel := range channels {
+		ret = append(ret, &ChannelResolver{c: channel})
+	}
+
+	return &ret, nil
+}

@@ -9,6 +9,7 @@ var Schema = `
 	# The query type, represents all of the entry points into our object graph
 	type Query {
 		channel(id: String!): Channel
+		channels(): [Channel]
 	}
 
 	# A character from the Star Wars universe
