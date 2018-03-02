@@ -4,6 +4,8 @@ import (
 	"time"
 	"github.com/zebresel-com/mongodm"
 	"github.com/OwlLaboratory/go_api/DB"
+	"gopkg.in/mgo.v2/bson"
+	"errors"
 )
 
 type Channel struct {
@@ -41,13 +43,16 @@ func (r *ChannelResolver) Updated() string {
 	return r.c.Updated.String()
 }
 
-func ChannelResolve(args struct{ ID string }) *ChannelResolver {
+func ChannelResolve(args struct{ ID string }) (*ChannelResolver, error) {
 	c, _ := DB.Session.GetSession()
 	collection := c.Model("Channel")
 
-
 	channel := &Channel{}
-	collection.FindOne().Exec(channel)
+	if !bson.IsObjectIdHex(args.ID) {
+		return nil,  errors.New("invalid ObjectID")
+	}
 
-	return &ChannelResolver{c: channel}
+	collection.FindOne(bson.M{"_id" : bson.ObjectIdHex(args.ID)}).Exec(channel)
+
+	return &ChannelResolver{c: channel}, nil
 }

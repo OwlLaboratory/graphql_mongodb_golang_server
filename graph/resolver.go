@@ -1,9 +1,11 @@
 package graph
 
-import "github.com/OwlLaboratory/go_api/channels"
+import (
+	"github.com/OwlLaboratory/go_api/channels"
+)
 
 type Resolver struct{}
 
-func (r *Resolver) Channel(args struct{ ID string }) *channels.ChannelResolver {
+func (r *Resolver) Channel(args struct{ ID string }) (*channels.ChannelResolver, error) {
 	return channels.ChannelResolve(args)
 }
