@@ -6,10 +6,6 @@ import (
 	"github.com/OwlLaboratory/go_api/DB"
 )
 
-type iChannel interface {
-	Platform() (*platformResolver, error)
-}
-
 type Channel struct {
 	mongodm.DocumentBase 	`json:",inline" bson:",inline"`
 
@@ -18,7 +14,6 @@ type Channel struct {
 	Created  *time.Time		`json:"created" bson:"created"`
 	Updated  *time.Time		`json:"updated" bson:"updated"`
 }
-
 
 type ChannelResolver struct {
 	c *Channel
@@ -46,7 +41,7 @@ func (r *ChannelResolver) Updated() string {
 	return r.c.Updated.String()
 }
 
-func ChannelResolverId(args struct{ ID string }) *ChannelResolver {
+func ChannelResolve(args struct{ ID string }) *ChannelResolver {
 	c, _ := DB.Session.GetSession()
 	collection := c.Model("Channel")
 

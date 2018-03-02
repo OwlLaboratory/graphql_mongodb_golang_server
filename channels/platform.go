@@ -4,7 +4,6 @@ type Platform struct {
 	Name	string
 }
 
-
 type platformResolver struct {
 	p *Platform
 }
