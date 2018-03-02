@@ -10,13 +10,13 @@ var Schema = `
 
 	# The query type, represents all of the entry points into our object graph
 	type Query {
-		channel(id: ID!): Channel
+		channel(id: String!): Channel
 	}
 
 	# A character from the Star Wars universe
 	interface Entity {
 		# The ID of the entity
-		id: ID!
+		id: String!
 		# The created time of the entity
 		created: String!
 		# The updated time of the entity
@@ -30,9 +30,13 @@ var Schema = `
 	# A channel entity
 	type Channel implements Entity {
 		# The ID of the channel
-		id: ID!
+		id: String!
 		# What this human calls themselves
 		name: String!
+		# The created time of the entity
+		created: String!
+		# The updated time of the entity
+		updated: String!
 	}
 	union SearchResult = Channel
 `

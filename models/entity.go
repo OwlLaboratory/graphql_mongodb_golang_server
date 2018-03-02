@@ -1,13 +1,9 @@
 package models
 
-import (
-	"github.com/neelance/graphql-go"
-)
-
-
 type entity interface {
-	ID() graphql.ID
-	Name() string
+	ID() string
+	Created() string
+	Updated() string
 }
 
 type entityResolver struct {

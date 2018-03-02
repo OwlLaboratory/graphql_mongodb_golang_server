@@ -16,6 +16,10 @@ func init() {
 }
 
 func main() {
+	s, _ := DB.Session.GetSession()
+
+	s.Register(&models.Channel{}, "channels")
+
 	defer DB.Session.CloseSession()
 
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

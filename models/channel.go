@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/neelance/graphql-go"
+	"time"
 	"github.com/OwlLaboratory/go_api/DB"
+	"github.com/zebresel-com/mongodm"
 )
 
 var collectionName = "channels"
@@ -11,8 +12,8 @@ type channelResolver struct {
 	c *Channel
 }
 
-func (r *channelResolver) ID() graphql.ID {
-	return r.c.ID
+func (r *channelResolver) ID() string {
+	return r.c.Id.Hex()
 }
 
 func (r *channelResolver) Name() string {
@@ -23,21 +24,40 @@ func (r *channelResolver) Platform() Platform {
 	return r.c.Platform
 }
 
+func (r *channelResolver) Created() string {
+	if r.c.Created == nil {
+		return ""
+	}
+	return r.c.Created.String()
+}
+
+func (r *channelResolver) Updated() string {
+	if r.c.Updated == nil {
+		return ""
+	}
+	return r.c.Updated.String()
+}
+
 type Platform struct {
 	Name	string
 }
 
 type Channel struct {
-	ID        	graphql.ID
-	Name      	string
-	Platform	Platform
+	mongodm.DocumentBase 	`json:",inline" bson:",inline"`
+
+	Name     string 		`json:"name" bson:"name"`
+	Platform Platform		`json:"platform" bson:"platform"`
+	Created  *time.Time		`json:"created" bson:"created"`
+	Updated  *time.Time		`json:"updated" bson:"updated"`
 }
 
-func (r *Resolver) Channel(args struct{ ID graphql.ID }) *channelResolver {
-	s := DB.Session.GetCollection(collectionName)
+func (r *Resolver) Channel(args struct{ ID string }) *channelResolver {
+	c, _ := DB.Session.GetSession()
+	collection := c.Model("Channel")
 
-	channel := Channel{}
 
-	s.Find(nil).One(&channel)
-	return &channelResolver{c: &channel}
+	channel := &Channel{}
+	collection.FindOne().Exec(channel)
+
+	return &channelResolver{c: channel}
 }
