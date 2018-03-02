@@ -1,6 +1,4 @@
-package models
-
-type Resolver struct{}
+package graph
 
 var Schema = `
 	schema {
@@ -21,7 +19,10 @@ var Schema = `
 		created: String!
 		# The updated time of the entity
 		updated: String!
-		# The friends of the character exposed as a connection with edges
+	}
+
+	interface IChannel {
+		# The platform connected to the channel
 		platform(): Platform!
 	}
 
@@ -35,7 +36,7 @@ var Schema = `
 	}
 
 	# A channel entity
-	type Channel implements Entity {
+	type Channel implements Entity, IChannel {
 		# The ID of the channel
 		id: String!
 		# What this human calls themselves

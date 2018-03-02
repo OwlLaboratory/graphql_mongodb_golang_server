@@ -4,21 +4,22 @@ import (
 	"log"
 	"net/http"
 	"github.com/neelance/graphql-go"
-	"github.com/OwlLaboratory/go_api/models"
 	"github.com/neelance/graphql-go/relay"
 	"github.com/OwlLaboratory/go_api/DB"
+	"github.com/OwlLaboratory/go_api/channels"
+	"github.com/OwlLaboratory/go_api/graph"
 )
 
 var schema *graphql.Schema
 
 func init() {
-	schema = graphql.MustParseSchema(models.Schema, &models.Resolver{})
+	schema = graphql.MustParseSchema(graph.Schema, &graph.Resolver{})
 }
 
 func main() {
 	s, _ := DB.Session.GetSession()
 
-	s.Register(&models.Channel{}, "channels")
+	s.Register(&channels.Channel{}, "channels")
 
 	defer DB.Session.CloseSession()
 
