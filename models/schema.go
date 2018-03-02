@@ -21,10 +21,17 @@ var Schema = `
 		created: String!
 		# The updated time of the entity
 		updated: String!
+		# The friends of the character exposed as a connection with edges
+		platform(): Platform!
 	}
 
 	# The mutation type, represents all updates we can make to our data
 	type Mutation {
+	}
+
+	type Platform {
+		# The platform name
+		name: String!
 	}
 
 	# A channel entity
@@ -37,6 +44,8 @@ var Schema = `
 		created: String!
 		# The updated time of the entity
 		updated: String!
+		# The updated time of the entity
+		platform: Platform!
 	}
 	union SearchResult = Channel
 `

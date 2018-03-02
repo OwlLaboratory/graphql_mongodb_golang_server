@@ -4,6 +4,7 @@ type entity interface {
 	ID() string
 	Created() string
 	Updated() string
+	Platform() (*platformResolver, error)
 }
 
 type entityResolver struct {

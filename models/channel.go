@@ -12,6 +12,11 @@ type channelResolver struct {
 	c *Channel
 }
 
+type platformResolver struct {
+	p *Platform
+}
+
+
 func (r *channelResolver) ID() string {
 	return r.c.Id.Hex()
 }
@@ -20,8 +25,12 @@ func (r *channelResolver) Name() string {
 	return r.c.Name
 }
 
-func (r *channelResolver) Platform() Platform {
-	return r.c.Platform
+func (r *channelResolver) Platform() (*platformResolver, error) {
+	return &platformResolver{p: &r.c.Platform}, nil
+}
+
+func (r *platformResolver) Name() string {
+	return r.p.Name
 }
 
 func (r *channelResolver) Created() string {
