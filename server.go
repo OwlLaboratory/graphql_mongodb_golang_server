@@ -27,7 +27,20 @@ func main() {
 		w.Write(page)
 	}))
 
-	http.Handle("/query", &relay.Handler{Schema: schema})
+	http.Handle("/query", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Header().Set("Access-Control-Allow-Methods", "POST,OPTIONS")
+		w.Header().Set( "Accept", "application/json")
+		w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Range, Content-Disposition, Content-Type")
+
+		if r.Method == "OPTIONS" {
+			return
+		}
+
+		handlerScheme := relay.Handler{Schema: schema}
+		handlerScheme.ServeHTTP(w, r)
+	}))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
