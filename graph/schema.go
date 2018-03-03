@@ -16,6 +16,7 @@ var Schema = `
 	type Mutation {
 		createChannel(input: CreateChannelInput!): Channel
 		updateChannel(input: UpdateChannelInput!): Channel
+		deleteChannel(input: DeleteChannelInput!): Channel
 	}
 
 	# A character from the Star Wars universe
@@ -40,6 +41,10 @@ var Schema = `
 	input UpdateChannelInput {
 		id: String!
 		patch: ChannelInput
+	}
+
+	input DeleteChannelInput {
+		id: String!
 	}
 
 	# The input object sent when someone is creating a new review

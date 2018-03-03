@@ -21,3 +21,7 @@ func (r *Resolver) CreateChannel(args struct{Input *channels.CreateChannelInput 
 func (r *Resolver) UpdateChannel(args struct{Input *channels.UpdateChannelInput }) (*channels.ChannelResolver, error) {
 	return channels.UpdateChannelMutation(args.Input)
 }
+
+func (r *Resolver) DeleteChannel(args struct{Input *channels.DeleteChannelInput }) (*channels.ChannelResolver, error) {
+	return channels.DeleteChannelMutation(args.Input)
+}
