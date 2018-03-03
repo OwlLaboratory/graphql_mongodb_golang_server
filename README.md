@@ -20,6 +20,8 @@ Of course I have very little experience under these two technologies, so I do no
     ./server
 ```
 
+Then: open http://localhost:8080
+
 ## Server + ODM
 
 For the server part I based on the [neelance server](https://github.com/graph-gophers/graphql-go) (he is the main creator of GopherJS)
@@ -124,3 +126,5 @@ Each collection is represented as an independent package containing all the reso
     go build server.go
     ./server
 ```
+
+Then: open http://localhost:8080
