@@ -1,7 +1,7 @@
 package channels
 
 import (
-	"../DB"
+	"github.com/OwlLaboratory/graphql_mongodb_golang_server/DB"
 	"gopkg.in/mgo.v2/bson"
 	"errors"
 	"github.com/OwlLaboratory/mongodm"

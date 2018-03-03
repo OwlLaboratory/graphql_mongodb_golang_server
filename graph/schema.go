@@ -1,7 +1,7 @@
 package graph
 
 import (
-	"../channels"
+	"github.com/OwlLaboratory/graphql_mongodb_golang_server/channels"
 	"github.com/graph-gophers/graphql-go"
 )
 

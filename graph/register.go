@@ -1,8 +1,8 @@
 package graph
 
 import (
-	"../channels"
-	"../DB"
+	"github.com/OwlLaboratory/graphql_mongodb_golang_server/channels"
+	"github.com/OwlLaboratory/graphql_mongodb_golang_server/DB"
 )
 
 func RegisterNodes() {

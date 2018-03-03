@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"github.com/graph-gophers/graphql-go/relay"
 	"./graph"
-	"./DB"
+	"github.com/OwlLaboratory/graphql_mongodb_golang_server/DB"
 )
 
 func main() {
