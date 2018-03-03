@@ -4,8 +4,6 @@ import (
 	"log"
 	"net/http"
 	"github.com/neelance/graphql-go/relay"
-	"github.com/OwlLaboratory/go_api/DB"
-	"github.com/OwlLaboratory/go_api/graph"
 )
 
 func main() {
