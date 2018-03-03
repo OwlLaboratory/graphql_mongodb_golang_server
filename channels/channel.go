@@ -10,7 +10,7 @@ import (
 type Channel struct {
 	mongodm.DocumentBase 	`json:",inline" bson:",inline"`
 
-	Name     string 		`json:"name" bson:"name"`
+	Name     *string 		`json:"name" bson:"name"`
 	Platform Platform		`json:"platform" bson:"platform"`
 }
 
@@ -24,12 +24,12 @@ type UpdateChannelInput struct {
 }
 
 type ChannelInput struct {
-	Name     string
+	Name     *string
 	Platform *PlatformInput
 }
 
 type PlatformInput struct {
-	Name     string
+	Name     *string
 }
 
 type ChannelResolver struct {
@@ -41,7 +41,7 @@ func (r *ChannelResolver) ID() string {
 }
 
 func (r *ChannelResolver) Name() string {
-	return r.c.Name
+	return *r.c.Name
 }
 
 
@@ -133,8 +133,13 @@ func UpdateChannelMutation(input *UpdateChannelInput) (*ChannelResolver, error) 
 
 	collection.New(channel) //this sets the connection/collection for this type and is strongly necessary(!) (otherwise panic)
 
-	channel.Name = input.Patch.Name
-	channel.Platform = Platform(*input.Patch.Platform)
+	if input.Patch.Name != nil {
+		channel.Name = input.Patch.Name
+	}
+
+	if input.Patch.Platform != nil {
+		channel.Platform = Platform(*input.Patch.Platform)
+	}
 
 	err = channel.Save()
 

@@ -45,7 +45,7 @@ var Schema = `
 	# The input object sent when someone is creating a new review
 	input ChannelInput {
 		# Name of the channel
-		name: String!
+		name: String
 		# Platform of the channel
 		platform: PlatformInput
 	}
@@ -53,7 +53,7 @@ var Schema = `
 	# The input object sent when someone is creating a new review
 	input PlatformInput {
 		# Name of the platform
-		name: String!
+		name: String
 	}
 
 	type Platform {

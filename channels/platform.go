@@ -1,7 +1,7 @@
 package channels
 
 type Platform struct {
-	Name	string
+	Name	*string
 }
 
 type platformResolver struct {
@@ -13,5 +13,5 @@ func (r *ChannelResolver) Platform() (*platformResolver, error) {
 }
 
 func (r *platformResolver) Name() string {
-	return r.p.Name
+	return *r.p.Name
 }
