@@ -1,5 +1,7 @@
 package graph
 
+import "github.com/OwlLaboratory/go_api/channels"
+
 var Schema = `
 	schema {
 		query: Query
@@ -8,15 +10,12 @@ var Schema = `
 
 	# The query type, represents all of the entry points into our object graph
 	type Query {
-		channel(id: String!): Channel
-		channels(first: Int, offset: Int): [Channel]
+		` + channels.Queries + `
 	}
 
 	# The mutation type, represents all updates we can make to our data
 	type Mutation {
-		createChannel(input: CreateChannelInput!): Channel
-		updateChannel(input: UpdateChannelInput!): Channel
-		deleteChannel(input: DeleteChannelInput!): Channel
+		` + channels.Mutations + `
 	}
 
 	# A character from the Star Wars universe
@@ -29,55 +28,9 @@ var Schema = `
 		updated: String!
 	}
 
-	interface IChannel {
-		# The platform connected to the channel
-		platform(): Platform!
-	}
+	` + channels.Interfaces + `
+	` + channels.Inputs + `
+	` + channels.Types + `
 
-	input CreateChannelInput {
-		channel: ChannelInput!
-	}
-
-	input UpdateChannelInput {
-		id: String!
-		patch: ChannelInput
-	}
-
-	input DeleteChannelInput {
-		id: String!
-	}
-
-	# The input object sent when someone is creating a new review
-	input ChannelInput {
-		# Name of the channel
-		name: String
-		# Platform of the channel
-		platform: PlatformInput
-	}
-
-	# The input object sent when someone is creating a new review
-	input PlatformInput {
-		# Name of the platform
-		name: String
-	}
-
-	type Platform {
-		# The platform name
-		name: String!
-	}
-
-	# A channel entity
-	type Channel implements Entity, IChannel {
-		# The ID of the channel
-		id: String!
-		# What this human calls themselves
-		name: String!
-		# The created time of the entity
-		created: String!
-		# The updated time of the entity
-		updated: String!
-		# The updated time of the entity
-		platform: Platform!
-	}
 	union SearchResult = Channel
 `
