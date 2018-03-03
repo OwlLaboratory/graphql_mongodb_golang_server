@@ -14,6 +14,6 @@ func (r *Resolver) Channels(args channels.PaginationArgs) (*[]*channels.ChannelR
 	return channels.ChannelListResolve(args)
 }
 
-func (r *Resolver) CreateChannel(channel *channels.ChannelArgs) (*channels.ChannelResolver, error) {
-	return channels.CreateChannelMutation(channel)
+func (r *Resolver) CreateChannel(args struct{Input *channels.CreateChannelInput }) (*channels.ChannelResolver, error) {
+	return channels.CreateChannelMutation(args.Input)
 }

@@ -9,7 +9,12 @@ var Schema = `
 	# The query type, represents all of the entry points into our object graph
 	type Query {
 		channel(id: String!): Channel
-		channels(first:Int, offset:Int): [Channel]
+		channels(first: Int, offset: Int): [Channel]
+	}
+
+	# The mutation type, represents all updates we can make to our data
+	type Mutation {
+		createChannel(input: CreateChannelInput!): Channel
 	}
 
 	# A character from the Star Wars universe
@@ -27,9 +32,8 @@ var Schema = `
 		platform(): Platform!
 	}
 
-	# The mutation type, represents all updates we can make to our data
-	type Mutation {
-		createChannel(name: String!, platform: PlatformInput!): Channel
+	input CreateChannelInput {
+		channel: ChannelInput!
 	}
 
 	# The input object sent when someone is creating a new review

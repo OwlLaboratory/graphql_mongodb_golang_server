@@ -17,12 +17,16 @@ type Channel struct {
 	Updated  *time.Time		`json:"updated" bson:"updated"`
 }
 
-type ChannelArgs struct {
-	Name     string
-	Platform PlatformArgs
+type CreateChannelInput struct {
+	Channel *ChannelInput
 }
 
-type PlatformArgs struct {
+type ChannelInput struct {
+	Name     string
+	Platform *PlatformInput
+}
+
+type PlatformInput struct {
 	Name     string
 }
 
@@ -99,17 +103,16 @@ func ChannelListResolve(args PaginationArgs) (*[]*ChannelResolver, error) {
 	return &ret, nil
 }
 
-func CreateChannelMutation(entity *ChannelArgs) (*ChannelResolver, error) {
+func CreateChannelMutation(input *CreateChannelInput) (*ChannelResolver, error) {
 	c, _ := DB.Session.GetSession()
 	collection := c.Model("Channel")
-
 
 	channel := &Channel{}
 	today := time.Now()
 	collection.New(channel) //this sets the connection/collection for this type and is strongly necessary(!) (otherwise panic)
 
-	channel.Name = entity.Name
-	channel.Platform = Platform(entity.Platform)
+	channel.Name = input.Channel.Name
+	channel.Platform = Platform(*input.Channel.Platform)
 	channel.Created = &today
 
 	err := channel.Save()
