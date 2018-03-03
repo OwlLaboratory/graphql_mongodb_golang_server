@@ -1,8 +1,7 @@
 package channels
 
 import (
-	"time"
-	"github.com/zebresel-com/mongodm"
+	"github.com/OwlLaboratory/mongodm"
 	"github.com/OwlLaboratory/go_api/DB"
 	"gopkg.in/mgo.v2/bson"
 	"errors"
@@ -13,16 +12,19 @@ type Channel struct {
 
 	Name     string 		`json:"name" bson:"name"`
 	Platform Platform		`json:"platform" bson:"platform"`
-	Created  *time.Time		`json:"created" bson:"created"`
-	Updated  *time.Time		`json:"updated" bson:"updated"`
 }
 
 type CreateChannelInput struct {
 	Channel *ChannelInput
 }
 
+type UpdateChannelInput struct {
+	ID    string
+	Patch *ChannelInput
+}
+
 type ChannelInput struct {
-	Name     string
+	Name     *string
 	Platform *PlatformInput
 }
 
@@ -42,17 +44,12 @@ func (r *ChannelResolver) Name() string {
 	return r.c.Name
 }
 
+
 func (r *ChannelResolver) Created() string {
-	if r.c.Created == nil {
-		return ""
-	}
 	return r.c.Created.String()
 }
 
 func (r *ChannelResolver) Updated() string {
-	if r.c.Updated == nil {
-		return ""
-	}
 	return r.c.Updated.String()
 }
 
@@ -108,14 +105,37 @@ func CreateChannelMutation(input *CreateChannelInput) (*ChannelResolver, error) 
 	collection := c.Model("Channel")
 
 	channel := &Channel{}
-	today := time.Now()
 	collection.New(channel) //this sets the connection/collection for this type and is strongly necessary(!) (otherwise panic)
 
-	channel.Name = input.Channel.Name
+	channel.Name = *input.Channel.Name
 	channel.Platform = Platform(*input.Channel.Platform)
-	channel.Created = &today
 
 	err := channel.Save()
+
+	return &ChannelResolver{channel}, err
+}
+
+func UpdateChannelMutation(input *UpdateChannelInput) (*ChannelResolver, error) {
+	c, _ := DB.Session.GetSession()
+	collection := c.Model("Channel")
+
+	channel := &Channel{}
+
+	if !bson.IsObjectIdHex(input.ID) {
+		return nil,  errors.New("invalid ObjectID")
+	}
+
+	err := collection.FindOne(bson.M{"_id" : bson.ObjectIdHex(input.ID)}).Exec(&channel)
+	if _, ok := err.(*mongodm.NotFoundError); ok {
+		return nil, err
+	}
+
+	collection.New(channel) //this sets the connection/collection for this type and is strongly necessary(!) (otherwise panic)
+
+	channel.Name = *input.Patch.Name
+	channel.Platform = Platform(*input.Patch.Platform)
+
+	err = channel.Save()
 
 	return &ChannelResolver{channel}, err
 }

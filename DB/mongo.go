@@ -6,7 +6,7 @@ package DB
 
 import (
 	"fmt"
-	"github.com/zebresel-com/mongodm"
+	"github.com/OwlLaboratory/mongodm"
 )
 
 type session struct {

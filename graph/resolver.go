@@ -17,3 +17,7 @@ func (r *Resolver) Channels(args channels.PaginationArgs) (*[]*channels.ChannelR
 func (r *Resolver) CreateChannel(args struct{Input *channels.CreateChannelInput }) (*channels.ChannelResolver, error) {
 	return channels.CreateChannelMutation(args.Input)
 }
+
+func (r *Resolver) UpdateChannel(args struct{Input *channels.UpdateChannelInput }) (*channels.ChannelResolver, error) {
+	return channels.UpdateChannelMutation(args.Input)
+}

@@ -15,6 +15,7 @@ var Schema = `
 	# The mutation type, represents all updates we can make to our data
 	type Mutation {
 		createChannel(input: CreateChannelInput!): Channel
+		updateChannel(input: UpdateChannelInput!): Channel
 	}
 
 	# A character from the Star Wars universe
@@ -36,10 +37,15 @@ var Schema = `
 		channel: ChannelInput!
 	}
 
+	input UpdateChannelInput {
+		id: String!
+		patch: ChannelInput
+	}
+
 	# The input object sent when someone is creating a new review
 	input ChannelInput {
 		# Name of the channel
-		name: String!
+		name: String
 		# Platform of the channel
 		platform: PlatformInput
 	}
