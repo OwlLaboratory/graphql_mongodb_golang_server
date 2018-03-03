@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"github.com/graph-gophers/graphql-go/relay"
-	"./graph"
+	"github.com/OwlLaboratory/graphql_mongodb_golang_server/graph"
 	"github.com/OwlLaboratory/graphql_mongodb_golang_server/DB"
 )
 
