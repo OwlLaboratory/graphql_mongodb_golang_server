@@ -20,7 +20,7 @@ func (s *session) GetSession() (*mongodm.Connection, error) {
 
 		dbConfig := &mongodm.Config{
 			DatabaseHosts: []string{"127.0.0.1"},
-			DatabaseName: "fameus",
+			DatabaseName: "GraphQL",
 		}
 
 		s.connection, s.err = mongodm.Connect(dbConfig)
