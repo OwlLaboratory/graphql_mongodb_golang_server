@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
-	"github.com/neelance/graphql-go/relay"
+	"github.com/graph-gophers/graphql-go/relay"
+	"./graph"
+	"./DB"
 )
 
 func main() {

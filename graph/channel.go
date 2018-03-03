@@ -1,6 +1,6 @@
 package graph
 
-import "github.com/OwlLaboratory/graphql_mongodb_golang_server/channels"
+import "../channels"
 
 /*
 	Resolver binding for channel module.
