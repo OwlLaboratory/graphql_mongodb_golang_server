@@ -57,12 +57,24 @@ func ChannelResolve(args struct{ ID string }) (*ChannelResolver, error) {
 	return &ChannelResolver{c: channel}, nil
 }
 
-func ChannelListResolve() (*[]*ChannelResolver, error) {
+func ChannelListResolve(args PaginationArgs) (*[]*ChannelResolver, error) {
 	c, _ := DB.Session.GetSession()
 	collection := c.Model("Channel")
 
 	channels := []*Channel{}
-	collection.Find().Exec(&channels)
+
+	limit := 0
+	offset := 0
+
+	if args.First != nil {
+		limit = int(*args.First)
+	}
+
+	if args.Offset != nil {
+		offset = int(*args.Offset)
+	}
+
+	collection.Find().Limit(int(limit)).Skip(int(offset)).Exec(&channels)
 
 	var ret []*ChannelResolver
 
@@ -71,4 +83,10 @@ func ChannelListResolve() (*[]*ChannelResolver, error) {
 	}
 
 	return &ret, nil
+}
+
+
+type PaginationArgs struct {
+	First *int32
+	Offset *int32
 }
