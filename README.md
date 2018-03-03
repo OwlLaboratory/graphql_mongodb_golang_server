@@ -10,6 +10,16 @@ I'm pretty sure it will help some people understand how a Golang GraphQL server 
 
 Of course I have very little experience under these two technologies, so I do not guarantee anything.
 
+## Run server
+
+```bash
+    git clone https://github.com/OwlLaboratory/graphql_mongodb_golang_server $HOME/go/src/github.com/OwlLaboratory/graphql_mongodb_golang_server
+    cd $HOME/go/src/github.com/OwlLaboratory/graphql_mongodb_golang_server/
+    go get ./...
+    go build server.go
+    ./server
+```
+
 ## Server + ODM
 
 For the server part I based on the [neelance server](https://github.com/graph-gophers/graphql-go) (he is the main creator of GopherJS)
@@ -104,3 +114,13 @@ Each collection is represented as an independent package containing all the reso
 
 ![module](https://image.ibb.co/gjD9L7/module.png)
 
+
+## Run server
+
+```bash
+    git clone https://github.com/OwlLaboratory/graphql_mongodb_golang_server $HOME/go/src/github.com/OwlLaboratory/graphql_mongodb_golang_server
+    cd $HOME/go/src/github.com/OwlLaboratory/graphql_mongodb_golang_server/
+    go get ./...
+    go build server.go
+    ./server
+```
