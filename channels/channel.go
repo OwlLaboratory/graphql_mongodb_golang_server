@@ -24,7 +24,7 @@ type UpdateChannelInput struct {
 }
 
 type ChannelInput struct {
-	Name     *string
+	Name     string
 	Platform *PlatformInput
 }
 
@@ -107,7 +107,7 @@ func CreateChannelMutation(input *CreateChannelInput) (*ChannelResolver, error) 
 	channel := &Channel{}
 	collection.New(channel) //this sets the connection/collection for this type and is strongly necessary(!) (otherwise panic)
 
-	channel.Name = *input.Channel.Name
+	channel.Name = input.Channel.Name
 	channel.Platform = Platform(*input.Channel.Platform)
 
 	err := channel.Save()
@@ -125,14 +125,15 @@ func UpdateChannelMutation(input *UpdateChannelInput) (*ChannelResolver, error) 
 		return nil,  errors.New("invalid ObjectID")
 	}
 
-	err := collection.FindOne(bson.M{"_id" : bson.ObjectIdHex(input.ID)}).Exec(&channel)
+	err := collection.FindOne(bson.M{"_id" : bson.ObjectIdHex(input.ID)}).Exec(channel)
+
 	if _, ok := err.(*mongodm.NotFoundError); ok {
 		return nil, err
 	}
 
 	collection.New(channel) //this sets the connection/collection for this type and is strongly necessary(!) (otherwise panic)
 
-	channel.Name = *input.Patch.Name
+	channel.Name = input.Patch.Name
 	channel.Platform = Platform(*input.Patch.Platform)
 
 	err = channel.Save()
