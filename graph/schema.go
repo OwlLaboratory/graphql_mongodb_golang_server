@@ -29,6 +29,21 @@ var Schema = `
 
 	# The mutation type, represents all updates we can make to our data
 	type Mutation {
+		createChannel(name: String!, platform: PlatformInput!): Channel
+	}
+
+	# The input object sent when someone is creating a new review
+	input ChannelInput {
+		# Name of the channel
+		name: String!
+		# Platform of the channel
+		platform: PlatformInput
+	}
+
+	# The input object sent when someone is creating a new review
+	input PlatformInput {
+		# Name of the platform
+		name: String!
 	}
 
 	type Platform {

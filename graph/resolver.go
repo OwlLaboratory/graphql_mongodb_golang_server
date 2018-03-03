@@ -13,3 +13,7 @@ func (r *Resolver) Channel(args struct{ ID string }) (*channels.ChannelResolver,
 func (r *Resolver) Channels(args channels.PaginationArgs) (*[]*channels.ChannelResolver, error) {
 	return channels.ChannelListResolve(args)
 }
+
+func (r *Resolver) CreateChannel(channel *channels.ChannelArgs) (*channels.ChannelResolver, error) {
+	return channels.CreateChannelMutation(channel)
+}
