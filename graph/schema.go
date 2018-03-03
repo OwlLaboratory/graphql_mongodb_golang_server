@@ -1,6 +1,19 @@
 package graph
 
-import "github.com/OwlLaboratory/go_api/channels"
+import (
+	"github.com/OwlLaboratory/go_api/channels"
+	"github.com/neelance/graphql-go"
+)
+
+var GQLSchema *graphql.Schema
+
+func init() {
+	GQLSchema = graphql.MustParseSchema(Schema, &Resolver{})
+}
+
+/*
+	Schema implement queries, mutations, resolvers and inputs from each individual module
+*/
 
 var Schema = `
 	schema {

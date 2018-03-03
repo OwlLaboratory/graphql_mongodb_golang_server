@@ -32,7 +32,7 @@ var Inputs = `
 		id: String!
 	}
 
-	# The input object sent when someone is creating a new review
+	# The input object sent when someone is creating/updating a new channel
 	input ChannelInput {
 		# Name of the channel
 		name: String
@@ -40,7 +40,7 @@ var Inputs = `
 		platform: PlatformInput
 	}
 
-	# The input object sent when someone is creating a new review
+	# The input platform object sent when someone is creating/updating a new channel
 	input PlatformInput {
 		# Name of the platform
 		name: String
@@ -59,11 +59,11 @@ var Types = `
 		id: String!
 		# What this human calls themselves
 		name: String!
+		# The updated time of the entity
+		platform: Platform!
 		# The created time of the entity
 		created: String!
 		# The updated time of the entity
 		updated: String!
-		# The updated time of the entity
-		platform: Platform!
 	}
 `

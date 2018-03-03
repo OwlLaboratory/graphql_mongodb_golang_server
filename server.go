@@ -3,24 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
-	"github.com/neelance/graphql-go"
 	"github.com/neelance/graphql-go/relay"
 	"github.com/OwlLaboratory/go_api/DB"
-	"github.com/OwlLaboratory/go_api/channels"
 	"github.com/OwlLaboratory/go_api/graph"
 )
 
-var schema *graphql.Schema
-
-func init() {
-	schema = graphql.MustParseSchema(graph.Schema, &graph.Resolver{})
-}
-
 func main() {
-	s, _ := DB.Session.GetSession()
-
-	s.Register(&channels.Channel{}, "channels")
-
+	graph.RegisterNodes()
 	defer DB.Session.CloseSession()
 
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -28,17 +17,19 @@ func main() {
 	}))
 
 	http.Handle("/query", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Handle CORS
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.Header().Set("Access-Control-Allow-Methods", "POST,OPTIONS")
 		w.Header().Set( "Accept", "application/json")
 		w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Range, Content-Disposition, Content-Type")
 
+		// Handle OPTIONS for preflight request / Angular app
 		if r.Method == "OPTIONS" {
 			return
 		}
 
-		handlerScheme := relay.Handler{Schema: schema}
+		handlerScheme := relay.Handler{Schema: graph.GQLSchema}
 		handlerScheme.ServeHTTP(w, r)
 	}))
 

@@ -2,6 +2,10 @@ package graph
 
 import "github.com/OwlLaboratory/go_api/channels"
 
+/*
+	Resolver binding for channel module.
+*/
+
 func (r *Resolver) Channel(args struct{ ID string }) (*channels.ChannelResolver, error) {
 	return channels.GetChannel(args)
 }
